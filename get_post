@@ -19,7 +19,7 @@
   var getops = {
     hostname:fserver,
     port: fport,
-    path:fpath,
+    path: fpath,
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
     };
@@ -27,7 +27,7 @@
   var postops = {
     hostname:tserver,
     port: tport,
-    path:tpath,
+    path: tpath,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
     };
