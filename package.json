@@ -9,7 +9,8 @@
     },
     "dependencies": {
 	"request":">=2.33.0",
-	"underscore":">=1.4.4"
+	"underscore":">=1.4.4",
+	"commander":">=2.2.0"
     },
     "devDependencies": {},
     "optionalDependencies": {},

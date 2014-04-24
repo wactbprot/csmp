@@ -5,16 +5,26 @@
  * gs fromurl tourl
  */
 (function() {
-  var pa      = process.argv,
-      fpath    = pa[2],
-      fserver  = 'localhost',
-      fport    = 5984,
-      tpath    = pa[3],
-      tserver  = 'localhost',
-      tport    = 8001,
+  var postreq,
+      getreq,
       http    = require('http'),
-      postreq,
-      getreq;
+      prog    = require('commander');
+
+  prog.version("0.0.2")
+  .option("-s, --fromserver <server>", "server name to get data from (default is localhost)", fserver)
+  .option("-S, --toserver <server>", "server name to post data to (default is localhost)", tserver)
+  .option("-f, --frompath <path>", "path to get data from", fpath)
+  .option("-t, --topath <path>", "path to post data to", tpath)
+  .option("-o, --fromport <port>", "from port (default is  5984)", parseInt)
+  .option("-O, --toport <port>", "to port (default is  8001)", parseInt)
+  .parse(process.argv);
+
+  var fserver = prog.fromserver ? prog.fromserver : "localhost",
+      tserver = prog.toserver   ? prog.toserver   : "localhost",
+      tport   = prog.toport     ? prog.toport     : 8001,
+      fport   = prog.fromport   ? prog.fromport   : 5984,
+      fpath   = "/"  +  prog.frompath,
+      tpath   = "/" +  prog.topath;
 
   var getops = {
     hostname:fserver,
@@ -22,7 +32,7 @@
     path: fpath,
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
-    };
+  };
 
   var postops = {
     hostname:tserver,
@@ -33,49 +43,40 @@
     };
 
   //--- post ---
-  if(tpath){
-    var tocb = function(res) {
-      var str = ''
-      res.on('data', function (chunk) {
+  var tocb = function(res) {
+    var str = ''
+    res.on('data', function (chunk) {
         str += chunk;
-      });
-
-      res.on('end', function () {
-        console.log(str);
-      });
-    }
-
-    postreq = http.request(postops, tocb);
-    postreq.on('error', function(e) {
-      console.log('post error ' + e.message);
     });
-  }
 
-
+    res.on('end', function () {
+      console.log(str);
+    });
+    }
 
   // --- get---
-  if(fpath){
-
-    var fromcb = function(res) {
-      res.setEncoding('utf8');
-      res.on('data', function (data) {
-        if(tpath){
-          postreq.write(data);
-          postreq.end();
-
-        }else{
-          console.log(data);
-        }
-        });
-    }
-
-    getreq = http.request(getops, fromcb);
-    getreq.on('error', function(e) {
-      console.log('get error ' + e.message);
+  var fromcb = function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function (data) {
+      console.log(data);
+      if(tpath){
+        postreq.write(data);
+        postreq.end();
+      }
     });
-
-    getreq.end();
   }
+
+  postreq = http.request(postops, tocb);
+  postreq.on('error', function(e) {
+    console.log('post error ' + e.message);
+  });
+  postreq.end();
+
+  getreq = http.request(getops, fromcb);
+  getreq.on('error', function(e) {
+    console.log('get error ' + e.message);
+  });
+  getreq.end();
   //
   // at least this works
   // var  request = require('request');
