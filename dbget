@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+/**
+ * get data from db write to stout
+ */
+(function() {
+  var postreq,
+      getreq,
+      http    = require('http'),
+      prog    = require('commander');
+
+  prog.version("0.0.1")
+  .option("-s, --server <server>", "server name to get data from (default is localhost)")
+  .option("-i, --path <path>", "path to get data from (dbname/id)")
+  .option("-p, --port <port>", "from port (default is  5984)", parseInt)
+  .parse(process.argv);
+
+  var fserver = prog.server ? prog.erver : "localhost",
+      port    = prog.port     ? prog.port     : 5984,
+      path    = prog.path;
+
+  var getops = {
+    hostname: fserver,
+    port: port,
+    path: "/" + path,
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  };
+  // --- get---
+  if(path){
+    var fromcb = function(res) {
+      res.setEncoding('utf8');
+      res.on('data', function (data) {
+        process.stdout.write(data);
+      });
+    }
+
+    getreq = http.request(getops, fromcb);
+    getreq.on('error', function(e) {
+      process.stderr.write("http get error " + e.message);
+    });
+    getreq.end();
+  }else{
+    process.stderr.write("no path given; specify with -i db/id");
+  }
+})();
