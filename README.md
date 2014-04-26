@@ -3,5 +3,5 @@
 ### ini
 
 ```
-gs  http://localhost:5984/test/mpdef http://localhost:8001/mpdef
+./dbget -i mp_db/mpdef | ./mppost -o /mpdef
 ```

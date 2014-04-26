@@ -3,8 +3,7 @@
  * get data from db write to stout
  */
 (function() {
-  var postreq,
-      getreq,
+  var getreq,
       http    = require('http'),
       prog    = require('commander');
 
@@ -14,7 +13,7 @@
   .option("-p, --port <port>", "from port (default is  5984)", parseInt)
   .parse(process.argv);
 
-  var fserver = prog.server ? prog.erver : "localhost",
+  var fserver = prog.server ? prog.server : "localhost",
       port    = prog.port     ? prog.port     : 5984,
       path    = prog.path;
 
