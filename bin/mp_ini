@@ -8,15 +8,15 @@
 
   prog.version("0.0.1")
   .option("-s, --server <server>", "server name to get data from (default is localhost)")
-  .option("-o, --path <path>", "path to get data from (dbname/id)")
+  .option("-i, --id <id>", "id under which the mp should be stored")
   .option("-p, --port <port>", "from port (default is  5984)", parseInt)
   .parse(process.argv);
 
-  if(prog.path){
+  if(prog.id){
     var con = {
       hostname: prog.server ? prog.server : "localhost",
       port:     prog.port   ? prog.port   : 8001,
-      path: "/" + prog.path,
+      path: "/" + prog.id,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

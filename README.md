@@ -3,11 +3,19 @@
 ### ini
 
 ```
-./dbget -i mp_db/mpdef | ./mppost -o mpdef
+db_get -i db/id | mp_ini -i id
+```
+Gets the document ```id``` from the database ```db``` and pipes it to
+```mp_ini```. 
+
+
+### load container
+
+```
+mp_load -i id -c 0
 ```
 
-## next:
+Loads the first (0) Container of the mp.
 
-* make /lib- folder with db/mp connection functions
-* mpctrl
-** -o "load", "start", "stop"...
+## next:
+- ssmp
