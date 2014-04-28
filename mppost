@@ -1,13 +1,10 @@
 #!/usr/bin/env node
 /**
- * csmp.gs ... get/send
- *
- * gs fromurl tourl
+ *  get data from stdin write to ssmp
  */
 (function() {
-  var getreq,
-      http    = require('http'),
-      prog    = require('commander');
+  var prog       = require('commander'),
+      utils      = require('./lib/utils');
 
   prog.version("0.0.1")
   .option("-s, --server <server>", "server name to get data from (default is localhost)")
@@ -15,42 +12,19 @@
   .option("-p, --port <port>", "from port (default is  5984)", parseInt)
   .parse(process.argv);
 
-  var  path = prog.path;
-
-  if(path){
-    var postops = {
+  if(prog.path){
+    var con = {
       hostname: prog.server ? prog.server : "localhost",
-      port: prog.port     ? prog.port     : 8001,
-      path: "/" + path,
+      port:     prog.port   ? prog.port   : 8001,
+      path: "/" + prog.path,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json'
+      }
     };
 
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('readable', function(chunk) {
-      chunk = process.stdin.read();
-      if (chunk !== null) {
-        postreq.write(chunk);
-      }
-      postreq.end();
-    });
-    process.stdin.on('end', function() {
-      process.stdout.write("end stdin\n");
-    });
-
-    var tocb = function(res) {
-      var str = ''
-      res.on('data', function (chunk) {
-        str += chunk;
-      });
-      res.on('end', function () {
-        process.stdout.write("end http\n");
-      });
-    }
-
-    var postreq = http.request(postops, tocb);
-    postreq.on('error', function(e) {
-      process.stderr.write("http get error " + e.message);
-    });
+    utils.stdin2http(
+      utils.httpreq(con)
+    );
   }
 })();
