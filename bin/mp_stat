@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+/**
+ * get status from the mp
+ */
+(function() {
+  var prog    = require('commander'),
+      utils   = require('../lib/utils');
+
+  prog.version("0.0.1")
+  .option("-s, --server <server>", "server name to get data from (default is localhost)")
+  .option("-i, --id <id>", "id under which the mp is stored")
+  .option("-c, --container <container>", "aim container")
+  .option("-p, --port <port>", "from port (default is  8001)", parseInt)
+  .parse(process.argv);
+
+
+  if(prog.id        &&
+     prog.container){
+    var path = "/" + prog.id + "/ctrl/" + prog.container,
+        con = {
+          hostname: prog.server ? prog.server : "localhost",
+          port:     prog.port   ? prog.port     : 8001,
+          path:     path,
+          method:   'GET',
+          headers: { 'Content-Type': 'application/json' }
+      };
+
+    utils.httpreq(con).end();
+  }else{
+    process.stderr.write("no id (-i) or no container (-c) given\n");
+}
+}
+)();

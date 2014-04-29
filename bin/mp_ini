@@ -4,7 +4,7 @@
  */
 (function() {
   var prog       = require('commander'),
-      utils      = require('./lib/utils');
+      utils      = require('../lib/utils');
 
   prog.version("0.0.1")
   .option("-s, --server <server>", "server name to get data from (default is localhost)")

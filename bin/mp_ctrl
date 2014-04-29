@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- *  initializing of load
+ *  Function controlls a container
  */
 (function() {
   var prog       = require('commander'),
@@ -9,23 +9,38 @@
   prog.version("0.0.1")
   .option("-s, --server <server>", "server name to get data from (default is localhost)")
   .option("-i, --id <id>", "id under which the mp should be stored")
-  .option("-d, --cmd <cmd>", "controll comand 'load', 'stop', 'run' or 'pause'")
-  .option("-c, --container <container>", "container to load/prepare for exec")
-  .option("-p, --port <port>", "from port (default is  5984)", parseInt)
+  .option("-d, --cmd <cmd>", "control comand 'load', 'stop', 'run' or 'pause'")
+  .option("-c, --container <container>", "aim container")
+  .option("-p, --port <port>", "from port (default is  8001)", parseInt)
   .parse(process.argv);
 
-  if(prog.id && prog.container && prog.cmd){
+  if(prog.id        &&
+     prog.container &&
+     prog.cmd){
     var con = {
       hostname: prog.server ? prog.server : "localhost",
       port:     prog.port   ? prog.port   : 8001,
       path:     "/" + prog.id + "/ctrl/" + prog.container,
       method: 'PUT',
-      headers: {'Content-Type': 'application/json'}
-    };
+      headers: {
+        'Content-Type': 'text/data'
+      }
+    },
+        cmd = prog.cmd;
 
-    var req =  utils.httpreq(con);
-    req.write(prog.cmd);
-    req.end();
+    if(cmd === "load"  ||
+       cmd === "run"   ||
+       cmd === "pause" ||
+       cmd === "stop"){
 
+      var req = utils.httpreq(con);
+      req.write(cmd);
+      req.end();
+
+    }else{
+      process.stderr.write("no valid command\n")
+    }
+  }else{
+    process.stderr.write("no id (-i), container (-c) or command (-d) given\n")
   }
 })();
