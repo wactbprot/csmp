@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- *  Function controlls a container
+ *   controls a container
  */
 (function() {
   var prog       = require('commander'),
@@ -11,7 +11,7 @@
   .option("-i, --id <id>", "id under which the mp should be stored")
   .option("-d, --cmd <cmd>", "control comand 'load', 'stop', 'run' or 'pause'")
   .option("-c, --container <container>", "aim container")
-  .option("-p, --port <port>", "from port (default is  8001)", parseInt)
+  .option("-P, --port <port>", "from port (default is  8001)", parseInt)
   .parse(process.argv);
 
   if(prog.id        &&
