@@ -10,6 +10,7 @@
   .option("-s, --server <server>", "server name to get data from (default is localhost)")
   .option("-i, --id <id>", "id under which the mp is stored")
   .option("-p, --path <path>", "path to get values from")
+  .option("-t, --repeat <repeat>", "repeat time intervall in ms (default is 1000", parseInt)
   .option("-P, --port <port>", "from port (default is  8001)", parseInt)
   .parse(process.argv);
 
@@ -23,8 +24,10 @@
           method:   'GET',
           headers: { 'Content-Type': 'application/json' }
       };
-
-    utils.httpreq(con).end();
+    var repeat = prog.repeat ? prog.repeat : 1000
+    setInterval(function(){
+      utils.httpreq(con).end();
+    },repeat)
   }else{
     process.stderr.write("no id (-i) or no path (-p) given\n");
 }
