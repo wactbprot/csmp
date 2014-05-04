@@ -10,7 +10,8 @@
     "dependencies": {
 	"request":">=2.33.0",
 	"underscore":">=1.4.4",
-	"commander":">=2.2.0"
+	"commander":">=2.2.0",
+	"bunyan":">=0.22.1"
     },
     "devDependencies": {},
     "optionalDependencies": {},
