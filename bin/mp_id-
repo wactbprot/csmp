@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+/**
+ *   controls a container
+ */
+(function() {
+  var prog       = require('commander'),
+      utils      = require('../lib/utils');
+
+  prog.version("0.0.1")
+  .option("-s, --server <server>", "server name to get data from (default is localhost)")
+  .option("-i, --id <id>", "measurement program id under which the ids should be stored")
+  .option("-d, --cid <cid>", "calibration document id")
+  .option("-P, --port <port>", "from port (default is  8001)", parseInt)
+  .parse(process.argv);
+
+  if(prog.id    &&
+     prog.cid){
+    var con = {
+      hostname: prog.server ? prog.server : "localhost",
+      port:     prog.port   ? prog.port   : 8001,
+      path:     "/" + prog.id + "/id",
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'text/data'
+      }
+    }
+
+    var req = utils.httpreq(con);
+      req.write(prog.cid);
+      req.end();
+
+  }else{
+    process.stderr.write("no mp id (-i) or calibration doc id (-d) given\n")
+  }
+})();
