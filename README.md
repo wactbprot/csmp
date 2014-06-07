@@ -3,10 +3,10 @@
 ### ini
 
 ```
-db_get -i db/id | mp_ini -i id
+mp_ini -i id -d load
 ```
-Gets the document ```id``` from the database ```db``` and pipes it to
-```mp_ini```. 
+loads the document (the mp definition) with ```id``` from the
+database ```db``` and builds the mp.
 
 
 ### ctrl container

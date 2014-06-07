@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- *  get data from stdin write to ssmp
+ *   controls a container
  */
 (function() {
   var prog       = require('commander'),
@@ -9,22 +9,35 @@
   prog.version("0.0.1")
   .option("-s, --server <server>", "server name to get data from (default is localhost)")
   .option("-i, --id <id>", "id under which the mp should be stored")
-  .option("-P, --port <port>", "from port (default is  5984)", parseInt)
+  .option("-d, --cmd <cmd>", "control comand 'load', 'delete'")
+  .option("-P, --port <port>", "from port (default is  8001)", parseInt)
   .parse(process.argv);
 
-  if(prog.id){
+  if(prog.id   &&
+     prog.cmd){
+
     var con = {
       hostname: prog.server ? prog.server : "localhost",
       port:     prog.port   ? prog.port   : 8001,
-      path: "/" + prog.id,
-      method: 'POST',
+      path:     "/" + prog.id,
+      method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'text/data'
       }
-    };
+    },
+        cmd = prog.cmd;
 
-    utils.stdin2http(
-      utils.httpreq(con)
-    );
+    if(cmd === "load"  ||
+       cmd === "delete"){
+
+      var req = utils.httpreq(con);
+      req.write(cmd);
+      req.end();
+
+    }else{
+      process.stderr.write("no valid command\n")
+    }
+  }else{
+    process.stderr.write("no id (-i), container (-c) or command (-d) given\n")
   }
 })();
