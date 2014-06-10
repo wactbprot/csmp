@@ -42,3 +42,9 @@ mp_stat -i id -c 0
 Returns the status of the  first (0) Container of the mp.
 
 - ssmp
+
+## put data to ssmp exchange
+
+```
+mp_put -i id -p target_fill/Value -d 0.5 
+```

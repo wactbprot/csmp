@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+/**
+ *  put data to exchange interface
+ */
+(function() {
+  var prog       = require('commander'),
+      utils      = require('../lib/utils');
+
+  prog.version("0.0.1")
+  .option("-s, --server <server>", "server name to get data from (default is localhost)")
+  .option("-i, --id <id>", "id under which the mp should be stored")
+  .option("-d, --data <data>", "data to put")
+  .option("-p, --path <path>", "path which to put to")
+  .option("-P, --port <port>", "from port (default is  8001)", parseInt)
+  .parse(process.argv);
+
+  if(prog.id        &&
+     prog.path &&
+     prog.data){
+
+    var con = {
+      hostname: prog.server ? prog.server : "localhost",
+      port:     prog.port   ? prog.port   : 8001,
+      path:     "/" + prog.id +"/exchange/"+ prog.path,
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'text/data'
+      }
+    },
+        req  = utils.httpreq(con);
+
+    req.write(prog.data);
+    req.end();
+
+  }else{
+    process.stderr.write("no path or no data\n")
+    }
+
+})();
