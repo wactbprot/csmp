@@ -43,8 +43,14 @@ Returns the status of the  first (0) Container of the mp.
 
 - ssmp
 
-## put data to ssmp exchange
+## set values to any path
 
 ```
-mp_put -i id -p target_fill/Value -d 0.5 
+mp_set -i id -p exchange/target_fill/Value -d 0.5 
+```
+
+or
+
+```
+./mp_set -i mpdef -p state/2/0/0 -d ready
 ```
