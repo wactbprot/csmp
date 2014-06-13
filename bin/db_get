@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+/**
+* get data from db write to stout
+*/
+(function() {
+  var prog = require('commander'),
+      utils = require('../lib/utils');
+
+  prog.version("0.0.1")
+  .option("-s, --server <server>", "server name to get data from (default is localhost)")
+  .option("-i, --path <path>", "path to get data from (dbname/id)")
+  .option("-P, --port <port>", "from port (default is 5984)", parseInt)
+  .parse(process.argv);
+
+  if(prog.path){
+    var con = {
+      hostname: prog.server ? prog.server : "localhost",
+      port: prog.port ? prog.port : 5984,
+      path: "/" + prog.path,
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    };
+
+    utils.httpreq(con).end()
+  }
+})();

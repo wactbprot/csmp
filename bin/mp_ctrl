@@ -27,19 +27,11 @@
       }
     },
         cmd = prog.cmd;
-
-    if(cmd === "load"  ||
-       cmd === "run"   ||
-       cmd === "pause" ||
-       cmd === "stop"){
-
+	
       var req = utils.httpreq(con);
       req.write(cmd);
-      req.end();
-
-    }else{
-      process.stderr.write("no valid command\n")
-    }
+	req.end();
+      
   }else{
     process.stderr.write("no id (-i), container (-c) or command (-d) given\n")
   }

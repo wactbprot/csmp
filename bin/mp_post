@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+/**
+* get data from stdin write to ssmp
+*/
+(function() {
+  var prog = require('commander'),
+      utils = require('../lib/utils');
+
+  prog.version("0.0.1")
+  .option("-s, --server <server>", "server name to get data from (default is localhost)")
+  .option("-i, --id <id>", "id under which the mp should be stored")
+  .option("-P, --port <port>", "from port (default is 5984)", parseInt)
+  .parse(process.argv);
+
+  if(prog.id){
+    var con = {
+      hostname: prog.server ? prog.server : "localhost",
+      port: prog.port ? prog.port : 8001,
+      path: "/" + prog.id,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    utils.stdin2http(
+      utils.httpreq(con)
+    );
+  }
+})();
