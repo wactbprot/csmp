@@ -18,7 +18,7 @@
     var con = {
       hostname: prog.server ? prog.server : "localhost",
       port:     prog.port   ? prog.port   : 8001,
-      path:     "/" + prog.id + "/id",
+      path:     "/" + prog.id + "/id/" + prog.cid,
       method: 'PUT',
       headers: {
         'Content-Type': 'text/data'
@@ -26,7 +26,7 @@
     }
 
     var req = utils.httpreq(con);
-      req.write(prog.cid);
+      req.write("load");
       req.end();
 
   }else{
