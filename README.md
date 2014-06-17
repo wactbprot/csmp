@@ -1,4 +1,13 @@
-## client side mp
+client side mp
+--------------
+
+## Installation
+
+```
+git clone https://github.com/wactbprot/csmp.git
+cd csmp
+npm install
+```
 
 ### ini
 
