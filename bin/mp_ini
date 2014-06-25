@@ -13,8 +13,7 @@
   .option("-P, --port <port>", "from port (default is  8001)", parseInt)
   .parse(process.argv);
 
-  if(prog.id   &&
-     prog.cmd){
+  if(prog.id){
 
     var con = {
       hostname: prog.server ? prog.server : "localhost",
@@ -26,17 +25,10 @@
       }
     },
         cmd = prog.cmd;
-
-    if(cmd === "load"  ||
-       cmd === "delete"){
-
       var req = utils.httpreq(con);
-      req.write(cmd);
+      req.write(cmd || 'load');
       req.end();
 
-    }else{
-      process.stderr.write("no valid command\n")
-    }
   }else{
     process.stderr.write("no id (-i), container (-c) or command (-d) given\n")
   }
