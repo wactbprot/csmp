@@ -13,9 +13,8 @@
   .option("-P, --port <port>", "from port (default is  8001)", parseInt)
   .parse(process.argv);
 
-  if(prog.id        &&
-     prog.path){
-    var path = "/" + prog.id + "/"+ prog.path,
+  if(prog.id){
+    var path = prog.path ? "/" + prog.id + "/"+ prog.path : "/" + prog.id,
         con = {
           hostname: prog.server ? prog.server : "localhost",
           port:     prog.port   ? prog.port     : 8001,
@@ -27,7 +26,7 @@
     utils.httpreq(con).end();
 
   }else{
-    process.stderr.write("no id (-i) or no path (-p) given\n");
+    process.stderr.write("no id (-i)  given\n");
 }
 }
 )();

@@ -9,6 +9,9 @@ cd csmp
 npm install
 ```
 
+
+
+
 ### ini
 
 ```
@@ -24,6 +27,17 @@ mp_ini -i id -d load
 loads the document (the mp definition) with ```id```
 and initializes the build up of the mp.
 
+### clone 
+
+It is possible to transfer the complete mp including state to another instance
+of ssmp ronning on a different machine (```otherserver```) on a different port
+(```otherport```).
+
+Is easy done with:
+
+```
+mp_get -i id | mp_post -i id -s otherserver -P otherport
+```
 
 ### ctrl container
 
@@ -68,12 +82,35 @@ mp_set -i id -p exchange/target_fill/Value -d 0.5
 or
 
 ```
-./mp_set -i mpdef -p state/2/0/0 -d ready
+mp_set -i mpdef -p state/2/0/0 -d ready
+```
+
+## get single objects
+
+with
+
+```
+mp_get -i mpdef -p state/0 
+```
+returns somthing like:
+
+```
+[
+
+    [
+        "ready",
+        "ready",
+        "ready",
+        "ready",
+        "ready"
+    ]
+
+]
 ```
 
 
 ## polling a endpoint
 
 ```
-./mp_poll -i mpdef -p state/0
+mp_poll -i mpdef -p state/0
 ```
