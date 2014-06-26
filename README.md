@@ -63,3 +63,10 @@ or
 ```
 ./mp_set -i mpdef -p state/2/0/0 -d ready
 ```
+
+
+## polling a endpoint
+
+```
+./mp_poll -i mpdef -p state/0
+```
