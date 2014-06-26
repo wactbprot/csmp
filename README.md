@@ -12,10 +12,17 @@ npm install
 ### ini
 
 ```
+mp_ini -i id 
+```
+which is equal to
+
+```
 mp_ini -i id -d load
 ```
-loads the document (the mp definition) with ```id``` from the
-database ```db``` and builds the mp.
+
+
+loads the document (the mp definition) with ```id```
+and initializes the build up of the mp.
 
 
 ### ctrl container
