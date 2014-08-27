@@ -14,7 +14,7 @@ npm install
 * MP ... measurement program
 * CD ... calibration document
 * ```mpid``` ... document id of the MP definition 
-* ```cdid`` ...  id of a calibration document
+* ```cdid``` ...  id of a calibration document
 
 
 ### MP initialization
@@ -50,9 +50,7 @@ mp_ctrl -i mpid -c 0 -d stop
 ```
 stops the first (0) Container of the MP with the id ```mpid```.
 
-
 The command:
-
 ```
 mp_ctrl -i mpid -c 0 -d 'load;run'
 ```
