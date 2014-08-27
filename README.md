@@ -44,11 +44,13 @@ The command:
 ```
 mp_ctrl -i mpid -c 0 -d load
 ```
-Loads the first (0) container of the mp and 
+loads the first (0) container  and 
 ```
 mp_ctrl -i mpid -c 0 -d stop
 ```
 stops the first (0) Container of the MP with the id ```mpid```.
+
+
 The command:
 
 ```
@@ -81,6 +83,7 @@ mp_set -i mpid -p state/2/0/0 -d ready
 
 ## Get objects
 
+The command:
 ```
 mp_get -i mpid -p state/0 
 ```
@@ -99,27 +102,30 @@ returns somthing like:
 
 ]
 ```
-
+which represents the state of container 0.
 
 ## Polling an endpoint
 
+The command:
 ```
-mp_poll -i mpid -p state/0
+mp_poll -i mpid -t 500 -p state/0
 ```
+requests the state of container 0 all 500 ms.
 
 ## Commit an CD id
 
-ssmp needs to know which CD should be used; tell him by 
-executing:
+[ssmp](https://github.com/wactbprot/ssmp) needs to know which CD should be
+used; 
+tell him by executing:
 
 ```
 mp_id+ -i mpid -d cdid
 ```
-of course there is a 
+of course there is a: 
 ```
 mp_id- -i mpid -d cdid
 ```
-and a
+and a:
 ```
 mp_id -i mpid -d cdid
 ```
