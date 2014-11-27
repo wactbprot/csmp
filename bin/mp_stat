@@ -16,7 +16,7 @@
 
   if(prog.id        &&
      prog.container){
-    var path = "/" + prog.id + "/ctrl/" + prog.container,
+    var path = "/" + prog.id + "/" +  prog.container + "/ctrl",
         con = {
           hostname: prog.server ? prog.server : "localhost",
           port:     prog.port   ? prog.port     : 8001,

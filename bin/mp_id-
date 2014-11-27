@@ -19,16 +19,17 @@
       hostname: prog.server ? prog.server : "localhost",
       port:     prog.port   ? prog.port   : 8001,
       path:     "/" + prog.id + "/id/" + prog.cid,
-      method: 'DELETE',
+      method: 'PUT',
       headers: {
         'Content-Type': 'text/data'
       }
     }
 
     var req = utils.httpreq(con);
+      req.write("remove");
       req.end();
 
   }else{
-    process.stderr.write("no mp id (-i) or calibration doc id (-d) given\n")
+    process.stderr.write("no mp id (-i)  or calibration doc id (-d) given\n")
   }
 })();

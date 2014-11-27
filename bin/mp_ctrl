@@ -20,7 +20,7 @@
     var con = {
       hostname: prog.server ? prog.server : "localhost",
       port:     prog.port   ? prog.port   : 8001,
-      path:     "/" + prog.id + "/ctrl/" + prog.container,
+      path:     "/" + prog.id  + "/" + prog.container + "/ctrl",
       method: 'PUT',
       headers: {
         'Content-Type': 'text/data'
