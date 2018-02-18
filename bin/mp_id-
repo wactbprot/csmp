@@ -21,12 +21,12 @@
       path:     "/" + prog.id + "/id/" + prog.cid,
       method: 'PUT',
       headers: {
-        'Content-Type': 'text/data'
+        'Content-Type': 'application/json'
       }
     }
 
     var req = utils.httpreq(con);
-      req.write("remove");
+      req.write(JSON.stringify({cmd:"remove"}));
       req.end();
 
   }else{

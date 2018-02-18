@@ -20,7 +20,7 @@
       path:     "/" + prog.id + "/id",
       method: 'GET',
       headers: {
-        'Content-Type': 'text/data'
+        'Content-Type': 'application/json'
       }
     }
 

@@ -21,13 +21,13 @@
       path:     "/" + prog.id,
       method: 'PUT',
       headers: {
-        'Content-Type': 'text/data'
+        'Content-Type': 'application/json'
       }
     },
-        cmd = prog.cmd;
-      var req = utils.httpreq(con);
-      req.write(cmd || 'load');
-      req.end();
+    cmd = prog.cmd || "load";
+    var req = utils.httpreq(con);
+    req.write(JSON.stringify({cmd: cmd}));
+    req.end();
 
   }else{
     process.stderr.write("no id (-i), container (-c) or command (-d) given\n")

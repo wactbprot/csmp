@@ -24,12 +24,12 @@
       path:     "/" + prog.id +"/"+ prog.path,
       method: 'PUT',
       headers: {
-        'Content-Type': 'text/data'
+        'Content-Type': 'application/json'
       }
     },
-        req  = utils.httpreq(con);
+    req  = utils.httpreq(con);
 
-    req.write(prog.data);
+    req.write(JSON.stringify({cmd:prog.data}));
     req.end();
 
   }else{
